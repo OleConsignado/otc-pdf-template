@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.2.4" />
+    <PackageReference Include="Otc.DomainBase.Exceptions" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Otc.PdfTemplate.Abstractions\Otc.PdfTemplate.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>
