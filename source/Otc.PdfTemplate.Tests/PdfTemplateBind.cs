@@ -26,13 +26,18 @@ namespace Otc.PdfTemplate.Tests
         {
             binder = serviceProvider.GetService<IBinder>();
 
-            var dictionary = BuildDictionary();
-            var templatePath = string.Format(@"{0}\{1}",Environment.CurrentDirectory, "Template.pdf");
-
-            byte[] templateBinded = binder.Bind(dictionary, templatePath);
-            File.WriteAllBytes(@"c:\temp\templateretorno.pdf", templateBinded);
-
-            Assert.True(File.Exists(@"c:\temp\templateretorno.pdf"));
+            Assert.True(binder.Add("Nome", "Zé Ruela da Silva")
+                         .Add("CPF", "01234567890")
+                         .Add("Identidade", "12457")
+                         .Add("Endereço", "rua do nada")
+                         .Add("N", "5")
+                         .Add("Complemento", "nada")
+                         .Add("Bairro", "Tabajara")
+                         .Add("Cidade", "Dazueira")
+                         .Add("UF", "KK")
+                         .Add("CEP", "456789")
+                         .PathFile(string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
+                         .Generate() != null);
         }
 
         [Fact]
@@ -43,18 +48,12 @@ namespace Otc.PdfTemplate.Tests
             var dictionary = BuildDictionaryForImage();
             var templatePath = string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
-            var imageList = new List<ImageData>
-            {
-                new ImageData() { ImageAttributes = "03399000000000000009762852800000733268360101", BarCode = true, HorizontalPosition = 50, VerticalPosition = 465 }
-            };
-
             
-            byte[] templateBinded = binder.Bind(dictionary, templatePath, imageList);
-            string dateTime = DateTime.Now.ToString("yy-MM-dd-ss");
-
-            File.WriteAllBytes(string.Format(@"c:\temp\TemplateBoleto_{0}.pdf", dateTime), templateBinded);
-
-            Assert.True(File.Exists(string.Format(@"c:\temp\TemplateBoleto_{0}.pdf", dateTime)));
+            
+            Assert.True(binder.AddRange(dictionary)
+                            .AddImage(binder.GenerateBarCode("03399000000000000009762852800000733268360101"), 50, 465)
+                            .PathFile(templatePath)
+                            .Generate() != null);
         }
 
         #region private
