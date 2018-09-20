@@ -27,6 +27,6 @@ binder.Add("Nome", "Name of user")
 	 .Add("CEP", "456789")
 	 .PathFile(string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
 	 .Generate(); 
-	 
+```	 
 At this time, the return is a byte array with the result. 
 
