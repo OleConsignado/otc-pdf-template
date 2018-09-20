@@ -14,8 +14,8 @@ Create a binder
 ```var binder = Binder();```
 
 Set all parameters and call Generate()
-
-```binder.Add("Nome", "Name of user")
+```
+binder.Add("Nome", "Name of user")
 	 .Add("CPF", "01234567890")
 	 .Add("Identidade", "12457")
 	 .Add("Endereço", "rua do nada")
