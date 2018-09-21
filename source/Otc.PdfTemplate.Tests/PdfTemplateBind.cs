@@ -35,7 +35,7 @@ namespace Otc.PdfTemplate.Tests
                          .Add("Cidade", "Dazueira")
                          .Add("UF", "KK")
                          .Add("CEP", "456789")
-                         .PathFile(string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
+                         .PathFile(string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
                          .Generate() != null); 
         }
 
