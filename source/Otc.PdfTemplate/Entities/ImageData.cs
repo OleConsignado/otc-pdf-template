@@ -1,10 +1,10 @@
-﻿using System;
+﻿using System.Drawing;
 
-namespace Otc.PdfTemplate.Abstractions
+namespace Otc.PdfTemplate.Entities
 {
     public class ImageData
     {
-        public System.Drawing.Image Image { get; set; }        
+        public Image Image { get; set; }        
         public float HorizontalPosition { get; set; }
         public float VerticalPosition { get; set; }
     }

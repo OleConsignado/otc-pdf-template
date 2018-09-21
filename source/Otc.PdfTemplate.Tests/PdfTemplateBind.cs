@@ -1,8 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Otc.PdfTemplate.Abstractions;
+using System.Collections.Generic;
+using System.IO;
 using Xunit;
 
 namespace Otc.PdfTemplate.Tests
@@ -11,12 +10,12 @@ namespace Otc.PdfTemplate.Tests
     {
         private readonly ServiceProvider serviceProvider;
 
-        private IBinder binder;
+        private IPdfConverter pdfConverter;
 
         public PdfTemplateBind()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddScoped<IBinder, Binder>();
+            services.AddScoped<IPdfConverter, PdfConverter>();
 
             serviceProvider = services.BuildServiceProvider();
         }
@@ -24,9 +23,9 @@ namespace Otc.PdfTemplate.Tests
         [Fact]
         public void Make_Data_Merge_With_Template()
         {
-            binder = serviceProvider.GetService<IBinder>();
+            pdfConverter = serviceProvider.GetService<IPdfConverter>();
 
-            Assert.True(binder.Add("Nome", "Zé Ruela da Silva")
+            Assert.True(pdfConverter.Add("Nome", "Zé Ruela da Silva")
                          .Add("CPF", "01234567890")
                          .Add("Identidade", "12457")
                          .Add("Endereço", "rua do nada")
@@ -43,15 +42,15 @@ namespace Otc.PdfTemplate.Tests
         [Fact]
         public void Make_Data_And_Images_Merge_With_Template()
         {
-            binder = serviceProvider.GetService<IBinder>();
+            pdfConverter = serviceProvider.GetService<IPdfConverter>();
 
             var dictionary = BuildDictionaryForImage();
             var templatePath = string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
             
             
-            Assert.True(binder.AddRange(dictionary)
-                            .AddImage(binder.GenerateBarCode("03399000000000000009762852800000733268360101"), 50, 465)
+            Assert.True(pdfConverter.AddRange(dictionary)
+                            .AddImage(new BarcodeGenerator().GenerateBarCode("03399000000000000009762852800000733268360101"), 50, 465)
                             .PathFile(templatePath)
                             .Generate() != null);
         }

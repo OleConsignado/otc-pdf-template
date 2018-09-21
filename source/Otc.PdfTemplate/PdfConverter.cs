@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text.pdf;
 using Otc.PdfTemplate.Abstractions;
+using Otc.PdfTemplate.Entities;
 using Otc.PdfTemplate.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -9,51 +10,12 @@ using System.Linq;
 
 namespace Otc.PdfTemplate
 {
-    public class Binder : IBinder
+    public class PdfConverter : IPdfConverter
     {
         List<KeyValuePair<string, string>> _templateParameters = new List<KeyValuePair<string, string>>();
         List<ImageData> _images = new List<ImageData>();
         string _templatePath;
-
-        ///// <summary>
-        ///// Make a binding of data to pdf template
-        ///// </summary>
-        ///// <param name="data">Data</param>
-        ///// <param name="templatePath">Path to pdf template file</param>
-        ///// <returns>byte array</returns>
-        ///// <exception cref="ArgumentNullException"></exception>
-        ///// <exception cref="BinderException"></exception>
-        //public byte[] Bind(Dictionary<string, string> data, string templatePath)
-        //{
-        //    return Bind(data, templatePath, new List<ImageData>());
-        //}
-
-        ///// <summary>
-        ///// Make a binding of data and images to pdf template
-        ///// </summary>
-        ///// <param name="data">Data</param>
-        ///// <param name="templatePath">Path to pdf template file</param>
-        ///// <param name="images">List of images to binding to pdf</param>
-        ///// <returns>byte array</returns>
-        ///// <exception cref="ArgumentNullException"></exception>
-        ///// <exception cref="BinderException"></exception>
-        //public byte[] Bind(Dictionary<string, string> data, string templatePath, List<ImageData> images)
-        //{
-        //    if (data == null)
-        //        throw new ArgumentNullException(nameof(data));
-
-        //    if (templatePath == null)
-        //        throw new ArgumentNullException(nameof(templatePath));
-
-        //    var templateData = LoadTemplateData(templatePath);
-
-        //    CheckParameters(data, templateData);
-
-        //    var byteTemplate = FillForm(data, images, templatePath);
-
-        //    return byteTemplate;
-        //}
-
+                
         private byte[] FillForm(Dictionary<string, string> templateData)
         {
             using (MemoryStream memoryStream = new MemoryStream())
@@ -128,28 +90,22 @@ namespace Otc.PdfTemplate
             }
         }
 
-        public IBinder Add(string key, string value)
+        public IPdfConverter Add(string key, string value)
         {
             _templateParameters.Add(new KeyValuePair<string, string>(key, value));
             return this;
         }
 
-        public IBinder AddRange(IEnumerable<KeyValuePair<string, string>> values)
+        public IPdfConverter AddRange(IEnumerable<KeyValuePair<string, string>> values)
         {
             _templateParameters.AddRange(values);
             return this;
         }
 
-        public IBinder AddImage(Image image, float horizontalPosition, float verticalPosition)
+        public IPdfConverter AddImage(Image image, float horizontalPosition, float verticalPosition)
         {
             _images.Add(new ImageData() { Image = image, HorizontalPosition = horizontalPosition, VerticalPosition = verticalPosition });
             return this;
-        }
-
-        public Image GenerateBarCode(string barcodeSource)
-        {
-            Barcode128 barcode128 = new Barcode128 { Code = barcodeSource };
-            return barcode128.CreateDrawingImage(Color.Black, Color.White);
         }
 
         public byte[] Generate()
@@ -169,7 +125,7 @@ namespace Otc.PdfTemplate
             return byteTemplate;
         }
 
-        public IBinder PathFile(string path)
+        public IPdfConverter PathFile(string path)
         {
             _templatePath = path;
             return this;
