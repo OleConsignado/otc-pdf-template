@@ -36,7 +36,7 @@ namespace Otc.PdfTemplate.Tests
                          .Add("UF", "KK")
                          .Add("CEP", "456789")
                          .PathFile(string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
-                         .Generate() != null);
+                         .Generate() != null); 
         }
 
         [Fact]
