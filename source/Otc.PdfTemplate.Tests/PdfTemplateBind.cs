@@ -35,7 +35,7 @@ namespace Otc.PdfTemplate.Tests
                          .Add("Cidade", "Dazueira")
                          .Add("UF", "KK")
                          .Add("CEP", "456789")
-                         .PathFile(string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
+                         .PathFile(string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
                          .Generate() != null); 
         }
 
@@ -45,7 +45,7 @@ namespace Otc.PdfTemplate.Tests
             pdfConverter = serviceProvider.GetService<IPdfConverter>();
 
             var dictionary = BuildDictionaryForImage();
-            var templatePath = string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
+            var templatePath = string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
             
             
