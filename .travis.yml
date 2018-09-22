@@ -2,6 +2,9 @@ language: csharp
 mono: none
 dotnet: 2.0.3
 
+before_install:
+  - sudo apt-get install libgdiplus
+
 install: 
 - bash ./cicd.sh install
 
