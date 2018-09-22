@@ -4,7 +4,6 @@ dotnet: 2.0.3
 
 before_install:
   - sudo apt-get install libgdiplus
-  - sudo ln -s /usr/lib/libgdiplus.so /usr/lib/gdiplus.dll  
 
 install: 
 - bash ./cicd.sh install
