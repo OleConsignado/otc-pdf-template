@@ -8,7 +8,7 @@ namespace Otc.PdfTemplate.Abstractions
         /// Generate a barcode based on the string passed to the method
         /// </summary>
         /// <param name="barcodeSource">string to convert to barcode</param>
-        /// <returns></returns>
-        Image GenerateBarCode(string barcodeSource);
+        /// <returns>return a barcode image based in the parameter.</returns>
+        Image GenerateBarcode(string barcodeSource);
     }
 }

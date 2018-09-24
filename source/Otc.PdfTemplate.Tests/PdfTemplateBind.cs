@@ -35,7 +35,7 @@ namespace Otc.PdfTemplate.Tests
                          .Add("Cidade", "Dazueira")
                          .Add("UF", "KK")
                          .Add("CEP", "456789")
-                         .PathFile(string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
+                         .PathFile(Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
                          .Generate() != null); 
         }
 
@@ -45,12 +45,10 @@ namespace Otc.PdfTemplate.Tests
             pdfConverter = serviceProvider.GetService<IPdfConverter>();
 
             var dictionary = BuildDictionaryForImage();
-            var templatePath = string.Format(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
+            var templatePath = Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
-            
-            
             Assert.True(pdfConverter.AddRange(dictionary)
-                            .AddImage(new BarcodeGenerator().GenerateBarCode("03399000000000000009762852800000733268360101"), 50, 465)
+                            .AddImage(new BarcodeGenerator().GenerateBarcode("03399000000000000009762852800000733268360101"), 50, 465)
                             .PathFile(templatePath)
                             .Generate() != null);
         }

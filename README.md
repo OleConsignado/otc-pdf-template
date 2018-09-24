@@ -11,7 +11,7 @@ This library is responsible to make binding between data and images to Pdf Templ
 
 Create a binder
 
-```var binder = Binder();```
+```var pdfConverter = new PdfConverter();```
 
 Set all parameters and call Generate()
 ```
@@ -25,7 +25,7 @@ binder.Add("Nome", "Name of user")
 	 .Add("Cidade", "cidade")
 	 .Add("UF", "KK")
 	 .Add("CEP", "456789")
-	 .PathFile(string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
+	 .PathFile(Path.Combine(@"{0}\{1}", Directory.GetCurrentDirectory(), "Template.pdf"))
 	 .Generate(); 
 ```	 
 At this time, the return is a byte array with the result. 
