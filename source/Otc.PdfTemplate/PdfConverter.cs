@@ -48,10 +48,10 @@ namespace Otc.PdfTemplate
                 throw new ArgumentNullException(nameof(_templateParameters));
 
             if (templateData.Count != _templateParameters.Count())
-                throw new BinderException(BinderCoreError.InvalidParametersNumber);
+                throw PdfTemplateError.InvalidParametersNumber;
 
             if (_templatePath == string.Empty)
-                throw new BinderException(BinderCoreError.PathNotFound);
+                throw PdfTemplateError.PathNotFound;
 
             string notExists = string.Empty;
 
@@ -63,9 +63,9 @@ namespace Otc.PdfTemplate
 
             if (!string.IsNullOrEmpty(notExists))
             {
-                var message = string.Format(BinderCoreError.ParametersNotFound.Message, notExists);
+                var message = string.Format(PdfTemplateError.ParametersNotFound.Message, notExists);
 
-                throw new BinderException(new BinderCoreError(BinderCoreError.InvalidParametersNumber.Key, message));
+                throw PdfTemplateError.InvalidParametersNumber;
             }
         }
 
