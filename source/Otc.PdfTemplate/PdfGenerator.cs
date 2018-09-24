@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Otc.PdfTemplate
 {
-    public class PdfConverter : IPdfConverter
+    public class PdfGenerator : IPdfGenerator
     {
         List<KeyValuePair<string, string>> _templateParameters = new List<KeyValuePair<string, string>>();
         List<ImageData> _images = new List<ImageData>();
@@ -90,19 +90,19 @@ namespace Otc.PdfTemplate
             }
         }
 
-        public IPdfConverter Add(string key, string value)
+        public IPdfGenerator Add(string key, string value)
         {
             _templateParameters.Add(new KeyValuePair<string, string>(key, value));
             return this;
         }
 
-        public IPdfConverter AddRange(IEnumerable<KeyValuePair<string, string>> values)
+        public IPdfGenerator AddRange(IEnumerable<KeyValuePair<string, string>> values)
         {
             _templateParameters.AddRange(values);
             return this;
         }
 
-        public IPdfConverter AddImage(Image image, float horizontalPosition, float verticalPosition)
+        public IPdfGenerator AddImage(Image image, float horizontalPosition, float verticalPosition)
         {
             _images.Add(new ImageData() { Image = image, HorizontalPosition = horizontalPosition, VerticalPosition = verticalPosition });
             return this;
@@ -125,7 +125,7 @@ namespace Otc.PdfTemplate
             return byteTemplate;
         }
 
-        public IPdfConverter PathFile(string path)
+        public IPdfGenerator PathFile(string path)
         {
             _templatePath = path;
             return this;

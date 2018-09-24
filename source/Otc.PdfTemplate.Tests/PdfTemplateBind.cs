@@ -10,12 +10,12 @@ namespace Otc.PdfTemplate.Tests
     {
         private readonly ServiceProvider serviceProvider;
 
-        private IPdfConverter pdfConverter;
+        private IPdfGenerator pdfConverter;
 
         public PdfTemplateBind()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddScoped<IPdfConverter, PdfConverter>();
+            services.AddScoped<IPdfGenerator, PdfGenerator>();
 
             serviceProvider = services.BuildServiceProvider();
         }
@@ -23,7 +23,7 @@ namespace Otc.PdfTemplate.Tests
         [Fact]
         public void Make_Data_Merge_With_Template()
         {
-            pdfConverter = serviceProvider.GetService<IPdfConverter>();
+            pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
             Assert.True(pdfConverter.Add("Nome", "Zé Ruela da Silva")
                          .Add("CPF", "01234567890")
@@ -42,7 +42,7 @@ namespace Otc.PdfTemplate.Tests
         [Fact]
         public void Make_Data_And_Images_Merge_With_Template()
         {
-            pdfConverter = serviceProvider.GetService<IPdfConverter>();
+            pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
             var dictionary = BuildDictionaryForImage();
             var templatePath = Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");

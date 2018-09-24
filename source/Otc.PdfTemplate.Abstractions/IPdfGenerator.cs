@@ -2,7 +2,7 @@
 
 namespace Otc.PdfTemplate.Abstractions
 {
-    public interface IPdfConverter
+    public interface IPdfGenerator
     {
 
         /// <summary>
@@ -10,13 +10,13 @@ namespace Otc.PdfTemplate.Abstractions
         /// </summary>
         /// <param name="key">Key to fill in template.</param>
         /// <param name="value">Value to add in template.</param>
-        IPdfConverter Add(string key, string value);
+        IPdfGenerator Add(string key, string value);
 
         /// <summary>
         /// Add a list of keys and values to fill the template.
         /// </summary>
         /// <param name="values">List of key and values to add the template.</param>
-        IPdfConverter AddRange(IEnumerable<KeyValuePair<string, string>> values);
+        IPdfGenerator AddRange(IEnumerable<KeyValuePair<string, string>> values);
 
         /// <summary>
         /// Add a image based on a position in the template.
@@ -24,14 +24,14 @@ namespace Otc.PdfTemplate.Abstractions
         /// <param name="Image">Image to add in the template.</param>
         /// <param name="HorizontalPosition"></param>
         /// <param name="VerticalPosition"></param>
-        IPdfConverter AddImage(System.Drawing.Image image, float horizontalPosition, float verticalPosition);
+        IPdfGenerator AddImage(System.Drawing.Image image, float horizontalPosition, float verticalPosition);
 
         /// <summary>
         /// Set the path of the template file
         /// </summary>
         /// <param name="path">Path to the template file.</param>
         /// <returns></returns>
-        IPdfConverter PathFile(string path);
+        IPdfGenerator PathFile(string path);
 
         /// <summary>
         /// Fill the template based on all parameter seted
