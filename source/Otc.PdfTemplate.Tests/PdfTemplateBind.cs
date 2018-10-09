@@ -26,14 +26,14 @@ namespace Otc.PdfTemplate.Tests
         {
             pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
-            Assert.True(pdfConverter.Add("NOME", "Ze Ruela da Silva")
+            Assert.True(pdfConverter.Add("Nome", "Ze Ruela da Silva")
              .Add("CPF", "01234567890")
-             .Add("IDENTIDADE", "12457")
-             .Add("ENDERECO", "rua do nada")
+             .Add("Identidade", "12457")
+             .Add("Endereco", "rua do nada")
              .Add("N", "5")
-             .Add("COMPLEMENTO", "nada")
-             .Add("BAIRRO", "Tabajara")
-             .Add("CIDADE", "Dazueira")
+             .Add("Complemento", "nada")
+             .Add("Bairro", "Tabajara")
+             .Add("Cidade", "Dazueira")
              .Add("UF", "KK")
              .Add("CEP", "456789")
              .PathFile(Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
@@ -61,14 +61,14 @@ namespace Otc.PdfTemplate.Tests
         {
             Dictionary<string, string> formModel = new Dictionary<string, string>
             {
-                {"NOME", "Ze Ruela da Silva"},
+                {"Nome", "Ze Ruela da Silva"},
                 {"CPF", "01234567890"},
-                {"IDENTIDADE", "12457"},
-                {"ENDERECO", "rua do nada"},
+                {"Identidade", "12457"},
+                {"Endereco", "rua do nada"},
                 {"N", "5"},
-                {"COMPLEMENTO", "nada"},
-                {"BAIRRO", "Tabajara"},
-                {"CIDADE", "Dazueira"},
+                {"Complemento", "nada"},
+                {"Bairro", "Tabajara"},
+                {"Cidade", "Dazueira"},
                 {"UF", "KK"},
                 {"CEP", "456789"},
             };
