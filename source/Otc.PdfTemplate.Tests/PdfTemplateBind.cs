@@ -26,14 +26,14 @@ namespace Otc.PdfTemplate.Tests
         {
             pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
-            Assert.True(pdfConverter.Add("Nome", "Zé Ruela da Silva")
+            Assert.True(pdfConverter.Add("NOME", "Ze Ruela da Silva")
              .Add("CPF", "01234567890")
-             .Add("Identidade", "12457")
-             .Add("Endereco", "rua do nada")
+             .Add("IDENTIDADE", "12457")
+             .Add("ENDERECO", "rua do nada")
              .Add("N", "5")
-             .Add("Complemento", "nada")
-             .Add("Bairro", "Tabajara")
-             .Add("Cidade", "Dazueira")
+             .Add("COMPLEMENTO", "nada")
+             .Add("BAIRRO", "Tabajara")
+             .Add("CIDADE", "Dazueira")
              .Add("UF", "KK")
              .Add("CEP", "456789")
              .PathFile(Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
@@ -61,14 +61,14 @@ namespace Otc.PdfTemplate.Tests
         {
             Dictionary<string, string> formModel = new Dictionary<string, string>
             {
-                {"Nome", "Zé Ruela da Silva"},
+                {"NOME", "Ze Ruela da Silva"},
                 {"CPF", "01234567890"},
-                {"Identidade", "12457"},
-                {"Endereco", "rua do nada"},
+                {"IDENTIDADE", "12457"},
+                {"ENDERECO", "rua do nada"},
                 {"N", "5"},
-                {"Complemento", "nada"},
-                {"Bairro", "Tabajara"},
-                {"Cidade", "Dazueira"},
+                {"COMPLEMENTO", "nada"},
+                {"BAIRRO", "Tabajara"},
+                {"CIDADE", "Dazueira"},
                 {"UF", "KK"},
                 {"CEP", "456789"},
             };
@@ -83,7 +83,7 @@ namespace Otc.PdfTemplate.Tests
                 { "N_BANCO", "347" },
                 { "PREFIXO", "033-7" },
                 { "LINHA_DIGITAVEL", "03399.76284 52800.000730 40529.901015 7 0000000" },
-                { "PAGADOR", "ZÉ RUELA DA SILVA   010.695.984-02\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " },
+                { "PAGADOR", "Ze RUELA DA SILVA   010.695.984-02\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " },
                 { "NOSSO_NUMERO", "000.000.000-42" },
                 { "NUMERO_DOCUMENTO", "000.000.000-42" },
                 { "DT_VENCIMENTO", "17/08/2018" },
@@ -104,7 +104,7 @@ namespace Otc.PdfTemplate.Tests
                 { "VALOR", "Yes" },
                 { "VLR_DOCUMENTO2", "35.656,64" },
                 { "INSTRUCOES", "Yes" },
-                { "PAGADOR2", "ZÉ RUELA DA SILVA   000.000.000-42\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " }
+                { "PAGADOR2", "Ze RUELA DA SILVA   000.000.000-42\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " }
             };
 
             return contractPaymentModel;
