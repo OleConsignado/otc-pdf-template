@@ -48,10 +48,10 @@ namespace Otc.PdfTemplate
                 throw new ArgumentNullException(nameof(_templateParameters));
 
             if (templateData.Count != _templateParameters.Count())
-                throw PdfTemplateError.InvalidParametersNumber;
+                throw PdfTemplateException.InvalidParametersNumber;
 
             if (_templatePath == string.Empty)
-                throw PdfTemplateError.PathNotFound;
+                throw PdfTemplateException.PathNotFound;
 
             string notExists = string.Empty;
 
@@ -63,9 +63,9 @@ namespace Otc.PdfTemplate
 
             if (!string.IsNullOrEmpty(notExists))
             {
-                var message = string.Format(PdfTemplateError.ParametersNotFound.Message, notExists);
+                var message = string.Format(PdfTemplateException.ParametersNotFound.Message, notExists);
 
-                throw PdfTemplateError.InvalidParametersNumber;
+                throw PdfTemplateException.InvalidParametersNumber;
             }
         }
 
