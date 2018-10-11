@@ -28,7 +28,7 @@ namespace Otc.PdfTemplate.Tests
             pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
             var dictionary = BuildDictionaryForImage();
-            var templatePath = Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
             Assert.True(pdfConverter.AddRange(dictionary)
                             .AddImage(new BarcodeGenerator().GenerateBarcode("03399000000000000009762852800000733268360101"), 50, 465)
