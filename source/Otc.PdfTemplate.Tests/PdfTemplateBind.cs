@@ -1,8 +1,8 @@
+using Microsoft.Extensions.DependencyInjection;
+using Otc.PdfTemplate.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Extensions.DependencyInjection;
-using Otc.PdfTemplate.Abstractions;
 using Xunit;
 
 namespace Otc.PdfTemplate.Tests
@@ -11,50 +11,29 @@ namespace Otc.PdfTemplate.Tests
     {
         private readonly ServiceProvider serviceProvider;
 
-        private IBinder binder;
+        private IPdfGenerator pdfConverter;
 
         public PdfTemplateBind()
         {
             IServiceCollection services = new ServiceCollection();
-            services.AddScoped<IBinder, Binder>();
+            services.AddScoped<IPdfGenerator, PdfGenerator>();
 
             serviceProvider = services.BuildServiceProvider();
         }
 
-        [Fact]
-        public void Make_Data_Merge_With_Template()
-        {
-            binder = serviceProvider.GetService<IBinder>();
-
-            var dictionary = BuildDictionary();
-            var templatePath = string.Format(@"{0}\{1}",Environment.CurrentDirectory, "Template.pdf");
-
-            byte[] templateBinded = binder.Bind(dictionary, templatePath);
-            File.WriteAllBytes(@"c:\temp\templateretorno.pdf", templateBinded);
-
-            Assert.True(File.Exists(@"c:\temp\templateretorno.pdf"));
-        }
 
         [Fact]
         public void Make_Data_And_Images_Merge_With_Template()
         {
-            binder = serviceProvider.GetService<IBinder>();
+            pdfConverter = serviceProvider.GetService<IPdfGenerator>();
 
             var dictionary = BuildDictionaryForImage();
-            var templatePath = string.Format(@"{0}\{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
+            var templatePath = Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "TemplateBoleto.pdf");
 
-            var imageList = new List<ImageData>
-            {
-                new ImageData() { ImageAttributes = "03399000000000000009762852800000733268360101", BarCode = true, HorizontalPosition = 50, VerticalPosition = 465 }
-            };
-
-            
-            byte[] templateBinded = binder.Bind(dictionary, templatePath, imageList);
-            string dateTime = DateTime.Now.ToString("yy-MM-dd-ss");
-
-            File.WriteAllBytes(string.Format(@"c:\temp\TemplateBoleto_{0}.pdf", dateTime), templateBinded);
-
-            Assert.True(File.Exists(string.Format(@"c:\temp\TemplateBoleto_{0}.pdf", dateTime)));
+            Assert.True(pdfConverter.AddRange(dictionary)
+                            .AddImage(new BarcodeGenerator().GenerateBarcode("03399000000000000009762852800000733268360101"), 50, 465)
+                            .PathFile(templatePath)
+                            .Generate() != null);
         }
 
         #region private
@@ -63,10 +42,10 @@ namespace Otc.PdfTemplate.Tests
         {
             Dictionary<string, string> formModel = new Dictionary<string, string>
             {
-                {"Nome", "Zé Ruela da Silva"},
+                {"Nome", "Ze Ruela da Silva"},
                 {"CPF", "01234567890"},
                 {"Identidade", "12457"},
-                {"Endereço", "rua do nada"},
+                {"Endereco", "rua do nada"},
                 {"N", "5"},
                 {"Complemento", "nada"},
                 {"Bairro", "Tabajara"},
@@ -85,7 +64,7 @@ namespace Otc.PdfTemplate.Tests
                 { "N_BANCO", "347" },
                 { "PREFIXO", "033-7" },
                 { "LINHA_DIGITAVEL", "03399.76284 52800.000730 40529.901015 7 0000000" },
-                { "PAGADOR", "ZÉ RUELA DA SILVA   010.695.984-02\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " },
+                { "PAGADOR", "Ze RUELA DA SILVA   010.695.984-02\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " },
                 { "NOSSO_NUMERO", "000.000.000-42" },
                 { "NUMERO_DOCUMENTO", "000.000.000-42" },
                 { "DT_VENCIMENTO", "17/08/2018" },
@@ -106,7 +85,7 @@ namespace Otc.PdfTemplate.Tests
                 { "VALOR", "Yes" },
                 { "VLR_DOCUMENTO2", "35.656,64" },
                 { "INSTRUCOES", "Yes" },
-                { "PAGADOR2", "ZÉ RUELA DA SILVA   000.000.000-42\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " }
+                { "PAGADOR2", "Ze RUELA DA SILVA   000.000.000-42\nRUA VAI QUE COLA, 1726,   StO Cristo\nTabajara - RN \nCEP: 59615270   " }
             };
 
             return contractPaymentModel;
