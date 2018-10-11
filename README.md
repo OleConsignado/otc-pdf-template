@@ -7,7 +7,7 @@
 
 This library is responsible to make binding between data and images to Pdf Template then buiding a new pdf file.
 
-#How To Use
+## How To Use
 
 Create a binder
 
@@ -30,11 +30,14 @@ pdfConverter.Add("Nome", "Name of user")
 ```	 
 At this time, the return is a byte array with the result. 
 
-#Important
+## Important
 
-It's necessary intall the libgdiplus in the container first when you do your on unities test. For us, this step is really necessary because the Travis CI integration.
+It's necessary intall the libgdiplus in the container first when you do your on unities test. For us, this step is really necessary because we used the Travis CI integration for build and publish this package in nuget.org.
 
-# sudo apt-get install libgdiplus
+Install on linux:
+
+```sudo apt-get install libgdiplus```
+
 Dockerfile (for images based on Debian):
 
-RUN apt-get install -y libgdiplus
+```RUN apt-get install -y libgdiplus```
