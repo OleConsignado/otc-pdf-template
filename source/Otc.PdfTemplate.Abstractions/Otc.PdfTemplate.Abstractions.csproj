@@ -2,6 +2,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
+    <Authors>Ole Consignado</Authors>
+    <Copyright>Ole Consignado (c) 2018</Copyright>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <PackageProjectUrl>https://github.com/OleConsignado/otc-pdf-template</PackageProjectUrl>       
   </PropertyGroup>
 
   <ItemGroup>
