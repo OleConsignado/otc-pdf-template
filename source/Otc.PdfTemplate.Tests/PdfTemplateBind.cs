@@ -21,25 +21,6 @@ namespace Otc.PdfTemplate.Tests
             serviceProvider = services.BuildServiceProvider();
         }
 
-        [Fact]
-        public void Make_Data_Merge_With_Template()
-        {
-            pdfConverter = serviceProvider.GetService<IPdfGenerator>();
-
-            Assert.True(pdfConverter.Add("Nome", "Ze Ruela da Silva")
-             .Add("CPF", "01234567890")
-             .Add("Identidade", "12457")
-             .Add("Endereco", "rua do nada")
-             .Add("N", "5")
-             .Add("Complemento", "nada")
-             .Add("Bairro", "Tabajara")
-             .Add("Cidade", "Dazueira")
-             .Add("UF", "KK")
-             .Add("CEP", "456789")
-             .PathFile(Path.Combine(@"{0}/{1}", Directory.GetCurrentDirectory(), "template.pdf"))
-             .Generate() != null);
-
-        }
 
         [Fact]
         public void Make_Data_And_Images_Merge_With_Template()
