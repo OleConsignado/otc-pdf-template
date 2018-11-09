@@ -16,7 +16,7 @@ namespace Otc.PdfTemplate
         List<ImageData> _images = new List<ImageData>();
         string _templatePath;
                 
-        private byte[] FillForm(Dictionary<string, string> templateData)
+        private byte[] FillForm(List<KeyValuePair<string, string>> templateData)
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
@@ -31,7 +31,7 @@ namespace Otc.PdfTemplate
                     foreach (ImageData imagen in _images)
                     {
                         iTextSharp.text.Image instance = iTextSharp.text.Image.GetInstance(imagen.Image, iTextSharp.text.BaseColor.White);
-                        pdfStamper.GetOverContent(1).AddImage(instance, instance.Width, 0.0f, 0.0f, instance.Height, imagen.VerticalPosition, imagen.HorizontalPosition);
+                        pdfStamper.GetOverContent(1).AddImage(instance, instance.Width, 0, 0, instance.Height, imagen.HorizontalPosition, imagen.VerticalPosition - 10);
                     }
                 }
 
@@ -120,7 +120,7 @@ namespace Otc.PdfTemplate
 
             CheckParameters(templateData);
 
-            var byteTemplate = FillForm(templateData);
+            var byteTemplate = FillForm(_templateParameters);
 
             return byteTemplate;
         }
