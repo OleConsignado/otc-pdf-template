@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="itext7" Version="7.1.12" />
     <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.2.4" />
   </ItemGroup>
 

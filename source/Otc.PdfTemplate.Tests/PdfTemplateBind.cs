@@ -1,5 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Otc.PdfTemplate.Abstractions;
+using Otc.PdfTemplate.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Xunit;
@@ -33,6 +35,115 @@ namespace Otc.PdfTemplate.Tests
                             .AddImage(new BarcodeGenerator().GenerateBarcode("03399000000000000009762852800000733268360101"), 50, 465)
                             .PathFile(templatePath)
                             .Generate() != null);
+        }
+
+        [Fact]
+        [Trait(nameof(PdfAGererator.Generate), "Sucesso")]
+        public void PdfAGenerateAsync_Sucesso()
+        {
+            var parameters = new List<KeyValuePair<string, string>>();
+            parameters.Add(new KeyValuePair<string, string>("N_Termo", "012"));
+            parameters.Add(new KeyValuePair<string, string>("Nome", "Teste"));
+            parameters.Add(new KeyValuePair<string, string>("CPF", "01205524585"));
+            parameters.Add(new KeyValuePair<string, string>("Beneficio", "0128787"));
+            parameters.Add(new KeyValuePair<string, string>("codigo", "012"));
+
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "TemplatePdfA.pdf");
+
+            var pdfAGerator = new PdfAGererator();
+
+            pdfAGerator.PathFile(templatePath);
+            pdfAGerator.AddRange(parameters);
+
+            var pdfa = pdfAGerator.Generate();
+
+            var targetFile = "Saida.pdf";
+
+            using (var sourceStream = new MemoryStream(pdfa))
+            using (var saida = new FileStream(targetFile, FileMode.OpenOrCreate))
+            {
+                sourceStream.CopyTo(saida);
+            }
+
+            Assert.True(pdfa != null);
+        }
+
+        [Fact]
+        [Trait(nameof(PdfAGererator.Generate), "ArgumentNullException")]
+        public void PdfAGenerateAsync_TemplatePathInvalido()
+        {
+            var paraNameExpected = "_templatePath";
+            var menssageExpected = "Value cannot be null.";
+
+            var parameters = new List<KeyValuePair<string, string>>();
+            parameters.Add(new KeyValuePair<string, string>("N_Termo", "012"));
+            parameters.Add(new KeyValuePair<string, string>("Nome", "Teste"));
+            parameters.Add(new KeyValuePair<string, string>("CPF", "01205524585"));
+            parameters.Add(new KeyValuePair<string, string>("Beneficio", "0128787"));
+            parameters.Add(new KeyValuePair<string, string>("codigo", "012"));
+
+
+            var pdfAGerator = new PdfAGererator();
+            pdfAGerator.AddRange(parameters);
+
+            var ex = Assert.ThrowsAny<ArgumentNullException>(() =>
+            {
+                pdfAGerator.Generate();
+            });
+
+            Assert.Equal(paraNameExpected, ex.ParamName);
+            Assert.Contains(menssageExpected, ex.Message);
+        }
+
+        [Fact]
+        [Trait(nameof(PdfAGererator.Generate), "PdfTemplateException")]
+        public void PdfAGenerateAsync_NumeroParametroInvalido()
+        {
+            var messageExpected = "Número de parâmetros de entrada de dados diferente do número de parâmetros do template";
+
+            var parameters = new List<KeyValuePair<string, string>>();
+            parameters.Add(new KeyValuePair<string, string>("Teste", "012"));
+
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "TemplatePdfA.pdf");
+
+            var pdfAGerator = new PdfAGererator();
+            pdfAGerator.PathFile(templatePath);
+            pdfAGerator.AddRange(parameters);
+
+            var ex = Assert.ThrowsAny<PdfTemplateException>(() =>
+            {
+                pdfAGerator.Generate();
+            });
+
+            Assert.Equal(messageExpected, ex.Message);
+        }
+
+        [Fact]
+        [Trait(nameof(PdfAGererator.Generate), "PdfTemplateException")]
+        public void PdfAGenerateAsync_ParametroInvalido()
+        {
+            var messageExpected = "Os parâmetros [Teste] não existem no template";
+
+            var parameters = new List<KeyValuePair<string, string>>();
+
+            parameters.Add(new KeyValuePair<string, string>("Nome", "Teste"));
+            parameters.Add(new KeyValuePair<string, string>("CPF", "01205524585"));
+            parameters.Add(new KeyValuePair<string, string>("Teste", "012"));
+            parameters.Add(new KeyValuePair<string, string>("Beneficio", "0128787"));
+            parameters.Add(new KeyValuePair<string, string>("codigo", "012"));
+
+            var templatePath = Path.Combine(Directory.GetCurrentDirectory(), "TemplatePdfA.pdf");
+
+            var pdfAGerator = new PdfAGererator();
+            pdfAGerator.PathFile(templatePath);
+            pdfAGerator.AddRange(parameters);
+
+            var ex = Assert.ThrowsAny<PdfTemplateException>(() =>
+            {
+                pdfAGerator.Generate();
+            });
+
+            Assert.Equal(messageExpected, ex.Message);
         }
 
         #region private

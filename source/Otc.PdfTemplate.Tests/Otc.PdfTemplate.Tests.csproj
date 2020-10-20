@@ -34,5 +34,11 @@
     <ProjectReference Include="..\Otc.PdfTemplate.Abstractions\Otc.PdfTemplate.Abstractions.csproj" />
     <ProjectReference Include="..\Otc.PdfTemplate\Otc.PdfTemplate.csproj" />
   </ItemGroup>
+ 
+  <ItemGroup>
+    <None Update="TemplatePdfA.pdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>
