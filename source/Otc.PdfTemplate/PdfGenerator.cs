@@ -20,7 +20,7 @@ namespace Otc.PdfTemplate
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                var pdfStamper = new PdfStamper(new PdfReader(_templatePath), memoryStream);
+                var pdfStamper = new PdfStamper(new PdfReader(_templatePath), memoryStream, '7');
                 var acroFields = pdfStamper.AcroFields;
 
                 foreach (var parametro in templateData)
